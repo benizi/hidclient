@@ -159,7 +159,7 @@ int		dosdpregistration(void);
 void		sdpunregister(unsigned int);
 static void	add_lang_attr(sdp_record_t *r);
 int		btbind(int sockfd, unsigned short port);
-int		initevents(int,int);
+int		initevents(unsigned int,int);
 void		closeevents(void);
 int		initfifo(char *);
 void		closefifo(void);
@@ -478,11 +478,11 @@ int	initfifo ( char *filename )
 
 /*
  * 	initevents () - opens all required event files
- * 	or only one device, if number useonlyone is >= 0
+ * 	or only the ones specified by evdevmask, if evdevmask != 0
  *	try to disable in X11 if mutex11 is set to 1
  * 	returns number of successfully opened event file nodes, or <1 for error
  */
-int	initevents ( int useonlyone, int mutex11 )
+int	initevents ( unsigned int evdevmask, int mutex11 )
 {
 	int	i, j, k;
 	char	buf[sizeof(EVDEVNAME)+8];
@@ -515,7 +515,7 @@ int	initevents ( int useonlyone, int mutex11 )
 	}
 	for ( i = j = 0; j < MAXEVDEVS; ++j )
 	{
-		if ( ( useonlyone >= 0 ) && ( useonlyone != j ) ) { continue; }
+		if ( ( evdevmask != 0 ) && ( ( evdevmask & ( 1 << j ) ) == 0 ) ) { continue; }
 		sprintf ( buf, EVDEVNAME, j );
 		eventdevs[i] = open ( buf, O_RDONLY );
 		if ( 0 <= eventdevs[i] )
@@ -1071,7 +1071,7 @@ int	main ( int argc, char ** argv )
 	int			maxevdevfileno;
 	char			skipsdp = 0;	  // On request, disable SDPreg
 	struct timeval		tv;		  // Used for "select"
-	int			onlyoneevdev = -1;// If restricted to using only one evdev
+	int			evdevmask = 0;// If restricted to using only one evdev
 	int			mutex11 = 0;      // try to "mute" in x11?
 	char			*fifoname = NULL; // Filename for fifo, if applicable
 	// Parse command line
@@ -1090,7 +1090,7 @@ int	main ( int argc, char ** argv )
 			skipsdp = 1;
 		}
 		else if ( 0 == strncmp ( argv[i], "-e", 2 ) ) {
-			onlyoneevdev = atoi(argv[i]+2);
+			evdevmask |= 1 << atoi(argv[i]+2);
 		}
 		else if ( 0 == strcmp ( argv[i], "-l" ) )
 		{
@@ -1124,7 +1124,7 @@ int	main ( int argc, char ** argv )
 	}
 	if ( NULL == fifoname )
 	{
-		if ( 1 > initevents (onlyoneevdev, mutex11) )
+		if ( 1 > initevents (evdevmask, mutex11) )
 		{
 			fprintf ( stderr, "Failed to open event interface files\n" );
 			return	2;
@@ -1345,7 +1345,7 @@ void	showhelp ( void )
 "Bluez Bluetooth stack for Linux.\n\n" \
 "The following command-line parameters can be used:\n" \
 "-h|-?		Show this information\n" \
-"-e<num>\t	Use only the one event device numbered <num>\n" \
+"-e<num>\t	Don't use all devices; only event device(s) <num>\n" \
 "-f<name>	Use fifo <name> instead of event input devices\n" \
 "-l		List available input devices\n" \
 "-x		Disable device in X11 while hidclient is running\n" \
