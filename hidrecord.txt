@@ -1,0 +1,50 @@
+#  HID-Record for virtual keyboard and mouse device
+05 01	# UsagePage GenericDesktop
+09 02	# Usage Mouse
+A1 01	# Collection Application
+85 01	# REPORT ID: 1
+09 01	# Usage Pointer
+A1 00	# Collection Physical
+05 09	# UsagePage Buttons
+19 01	# UsageMinimum 1
+29 03	# UsageMaximum 3
+15 00	# LogicalMinimum 0
+25 01	# LogicalMaximum 1
+75 01	# ReportSize 1
+95 03	# ReportCount 3
+81 02	# Input data variable absolute
+75 05	# ReportSize 5
+95 01	# ReportCount 1
+81 01	# InputConstant (padding)
+05 01	# UsagePage GenericDesktop
+09 30	# Usage X
+09 31	# Usage Y
+09 38	# Usage ScrollWheel
+15 81	# LogicalMinimum -127
+25 7F	# LogicalMaximum +127
+75 08	# ReportSize 8
+95 02	# ReportCount 3
+81 06	# Input data variable relative
+C0 C0	# EndCollection EndCollection
+05 01	# UsagePage GenericDesktop
+09 06	# Usage Keyboard
+A1 01	# Collection Application
+85 02	# REPORT ID: 2
+A1 00	# Collection Physical
+05 07	# UsagePage Keyboard
+19 E0	# UsageMinimum 224
+29 E7	# UsageMaximum 231
+15 00	# LogicalMinimum 0
+25 01	# LogicalMaximum 1
+75 01	# ReportSize 1
+95 08	# ReportCount 8
+81 02	# **Input data variable absolute
+95 08	# ReportCount 8
+75 08	# ReportSize 8
+15 00	# LogicalMinimum 0
+25 65	# LogicalMaximum 101
+05 07	# UsagePage Keycodes
+19 00	# UsageMinimum 0
+29 65	# UsageMaximum 101
+81 00	# **Input DataArray
+C0 C0	# EndCollection
