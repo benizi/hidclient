@@ -309,7 +309,7 @@ int	dosdpregistration ( void )
         svclass_id = sdp_list_append(0, &hidkb_uuid);
         sdp_set_service_classes(&record, svclass_id);
 	// And information about the HID profile used
-        sdp_uuid16_create(&profile[0].uuid, HIDP_UUID /*HID_PROFILE_ID*/);
+        sdp_uuid16_create(&profile[0].uuid, HID_PROFILE_ID);
         profile[0].version = 0x0100;
         pfseq = sdp_list_append(0, profile);
         sdp_set_profile_descs(&record, pfseq);
