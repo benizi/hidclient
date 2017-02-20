@@ -123,7 +123,7 @@
 #define	EVDEVNAME	"/dev/input/event%d"
 
 // Maximally, read MAXEVDEVS event devices simultaneously
-#define	MAXEVDEVS 16
+#define	MAXEVDEVS 64
 
 // Bluetooth "ports" (PSMs) for HID usage, standardized to be 17 and 19 resp.
 // In theory you could use different ports, but several implementations seem
