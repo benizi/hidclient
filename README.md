@@ -4,7 +4,7 @@ My tweaks to [hidclient](http://anselm.hoffmeister.be/computer/hidclient/index.h
 
 Original software is GPL'ed, written by Anselm Martin Hoffmeister.
 
-# Current status
+## Current status
 
 Currently, this works, but it's definitely not a smooth setup process. Quirks:
 
@@ -14,11 +14,11 @@ Currently, this works, but it's definitely not a smooth setup process. Quirks:
     - Need to restart `bluetooth` service on host after disconnecting client
 - `bluetoothd` needs to be restarted *after* `hidclient` is started
 
-# Full example usage
+## Full example usage
 
 This is what works for me running Arch Linux on both machines.
 
-## One-time setup steps
+### One-time setup steps
 
 On host machine:
 
@@ -34,7 +34,7 @@ On host machine:
     ## Determine correct IDs for use below:
     [host hidclient]$ XAUTHORITY=$HOME/.Xauthority sudo ./hidclient -l
 
-## Each time connecting
+### Each time connecting
 
 On the system running hidclient, in the source directory:
 
