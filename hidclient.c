@@ -758,7 +758,8 @@ int	parse_events ( fd_set * efds, int sockdesc )
 			//  chars expected != got: data invalid, drop it!
 			continue;
 		}
-		fprintf(stderr,"   read(%d)from(%d)   ", j, i );
+		if ( debugevents & 0x4 )
+			fprintf(stderr,"   read(%d)from(%d)   ", j, i );
 		if ( debugevents & 0x1 )
 			fprintf ( stdout, "EVENT{%04X %04X %08X}\n", inevent->type,
 			  inevent->code, inevent->value );
